@@ -1,5 +1,10 @@
 .header__link {
+  color: #A9A9A9;
+  font-size: 18px;
+  text-decoration: none;
   transition: opacity .2s ease-in;
+  display: flex;
+  justify-content: right;
 }
 
 .header__link:hover {
