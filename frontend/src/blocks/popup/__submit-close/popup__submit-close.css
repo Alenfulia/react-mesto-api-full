@@ -1,0 +1,44 @@
+.popup__submit-close {
+  background: transparent;
+  background-image: url('../../../images/Close-Icon-form.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: -42px;
+  right: -40px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity .2s ease-in;
+}
+
+.popup__submit-close:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__submit-close {
+    width: 32px;
+    height: 32px;
+    right: -30px;
+  }
+}
+
+@media screen and (max-width: 457px) {
+  .popup__submit-close {
+    width: 22px;
+    height: 22px;
+    top: -41px;
+    right: 0px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__submit-close {
+    width: 20px;
+    height: 20px;
+    top: -26px;
+  }
+}

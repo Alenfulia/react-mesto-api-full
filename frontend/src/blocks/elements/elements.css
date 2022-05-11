@@ -1,0 +1,15 @@
+.elements {
+  grid-area: elements;
+  max-width: 880px;
+  margin: 0 auto 66px;
+  text-decoration: none;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 280px));
+  justify-content: center;
+  row-gap: 20px;
+  column-gap: 17px;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}

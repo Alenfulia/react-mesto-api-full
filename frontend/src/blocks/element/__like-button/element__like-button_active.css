@@ -1,0 +1,6 @@
+.element__like-button_active {
+  background: transparent;
+  background-image: url('../../../images/heart-element_active.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
