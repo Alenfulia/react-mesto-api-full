@@ -1,3 +1,5 @@
+import { checkResponse } from './utils';
+
 class Auth {
   constructor({baseUrl, headers}) {
     this.baseUrl = baseUrl;
@@ -14,32 +16,37 @@ class Auth {
   signup({ email, password }) {
     return fetch(`${this.baseUrl}/signup`, {
       method: 'POST',
+      credentials: 'include',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ password, email })
     })
-      .then(this._parseResponse)
+      .then((res) => checkResponse(res));
   }
 
   signin({ email, password }) {
     return fetch(`${this.baseUrl}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: this.headers,
       body: JSON.stringify({ password, email })
     })
-      .then(this._parseResponse)
+    .then((res) => checkResponse(res));
   }
 
-  getContent(token) {
+  getContent() {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
-      headers: { ...this.headers, Authorization: `Bearer ${token}` },
-    }).then(this._parseResponse);
+      credentials: 'include',
+      headers: this.headers,
+    })
+    .then((res) => checkResponse(res));
   }
 }
 
 const auth = new Auth({
-  baseUrl: 'https://auth.nomoreparties.co',
+  baseUrl: process.env.REACT_APP_BASE_URL || 'https://localhost:3000',
   headers: {
+    'Accept': 'application/json',
     'Content-Type': 'application/json',
   }
 })

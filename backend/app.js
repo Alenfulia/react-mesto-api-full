@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
@@ -11,7 +14,7 @@ const {
   signUp, signIn,
 } = require('./middlewares/validations');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 4000 } = process.env;
 
 const app = express();
 
@@ -20,10 +23,22 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
+app.use(requestLogger); // подключаем логгер запросов
+
+app.use(cors({
+  origin: '*',
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(requestLogger); // подключаем логгер запросов
+app.use(helmet());
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signup', signUp, createUser);
 app.post('/signin', signIn, login);

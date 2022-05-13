@@ -1,3 +1,4 @@
+import { checkResponse, BASE_URL } from './utils';
 
 class Api {
   constructor(options) {
@@ -15,80 +16,86 @@ class Api {
   // Получение карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Добавление новой карточки через попап
   addCard({name, link}) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name,
         link,
       })
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Ставим лайк карточке/удаляем лайк
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: `${!isLiked ? 'DELETE' : 'PUT'}`,
+      credentials: 'include',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Получение информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       headers: this._headers
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Изменение информации пользователя из попапа
   setUserInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name,
         about,
       })
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 
   // Редактирование аватара пользователя через попап
   setUserAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar
       })
     })
-      .then(res => this._parseResponse(res));
+      .then(res => checkResponse(res));
   }
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-31',
+  baseUrl: BASE_URL,
   headers: {
-    authorization: '6a01cc4c-f1ea-4aa3-9e48-7802fcbe7643',
     'Content-Type': 'application/json'
   }
 });

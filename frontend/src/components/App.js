@@ -89,7 +89,7 @@ function App() {
     if (loggedIn) {
       history.push('/');
     }
-  }, [loggedIn]);
+  }, [history, loggedIn]);
 
   React.useEffect(() => {
     tokenCheck();
@@ -173,8 +173,8 @@ function App() {
 
   const handleUpdateUser = (newUserInfo) => {
     setIsLoading(true);
-    api.
-      setUserInfo(newUserInfo)
+    api
+      .setUserInfo(newUserInfo)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
@@ -189,8 +189,8 @@ function App() {
 
   const handleUpdateAvatar = (data) => {
     setIsLoading(true);
-    api.
-      setUserAvatar(data)
+    api
+      .setUserAvatar(data)
       .then((data) => {
         setCurrentUser(data);
         closeAllPopups();
@@ -205,8 +205,8 @@ function App() {
 
   const handleAddPlaceSubmit = (newData) => {
     setIsLoading(true);
-    api.
-      addCard(newData)
+    api
+      .addCard(newData)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
