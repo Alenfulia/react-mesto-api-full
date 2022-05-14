@@ -6,18 +6,11 @@ class Auth {
     this.headers = headers;
   }
 
-  _parseResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
-  }
-
   signup({ email, password }) {
     return fetch(`${this.baseUrl}/signup`, {
       method: 'POST',
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
+      headers: this.headers,
       body: JSON.stringify({ password, email })
     })
       .then((res) => checkResponse(res));
@@ -33,21 +26,25 @@ class Auth {
     .then((res) => checkResponse(res));
   }
 
-  getContent() {
+  getContent(token) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
-      headers: this.headers,
+      headers: {
+        ...this.headers,
+        authorization: `Bearer ${token}`,
+      },
     })
     .then((res) => checkResponse(res));
   }
-}
+};
 
 const auth = new Auth({
-  baseUrl: process.env.REACT_APP_BASE_URL || 'https://localhost:3000',
+  baseUrl: 'https://api.mesto-frontend.nomoredomains.xyz',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   }
 })
 

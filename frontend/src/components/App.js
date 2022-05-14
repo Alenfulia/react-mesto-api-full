@@ -93,7 +93,7 @@ function App() {
 
   React.useEffect(() => {
     tokenCheck();
-  }, []);
+  }, [history]);
 
 
   const onRegister = (data) => {

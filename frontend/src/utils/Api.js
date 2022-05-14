@@ -1,16 +1,9 @@
-import { checkResponse, BASE_URL } from './utils';
+import { checkResponse } from './utils';
 
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
-  }
-
-  _parseResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
   }
 
   // Получение карточек с сервера
@@ -94,9 +87,11 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: BASE_URL,
+  baseUrl: 'https://api.mesto-frontend.nomoredomains.xyz',
   headers: {
-    'Content-Type': 'application/json'
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   }
 });
 

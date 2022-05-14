@@ -5,5 +5,3 @@ export const checkResponse = (response) => {
         new Error(`Ошибка ${response.status}: ${response.statusText}`)
       );
 };
-
-export const BASE_URL = 'https://api.mesto-frontend.nomoredomains.xyz';
