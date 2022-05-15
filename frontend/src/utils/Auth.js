@@ -23,7 +23,13 @@ class Auth {
       headers: this.headers,
       body: JSON.stringify({ password, email })
     })
-    .then((res) => checkResponse(res));
+    .then((res) => checkResponse(res))
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        return data;
+      }
+    });
   }
 
   getContent(token) {

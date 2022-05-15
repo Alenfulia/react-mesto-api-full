@@ -27,4 +27,6 @@ module.exports = (req, res, next) => {
   req.user = payload;
   // Пропускаем запрос дальше
   next();
+
+  return true;
 };
