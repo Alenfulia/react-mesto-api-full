@@ -1,57 +1,39 @@
 import { checkResponse } from './utils';
 
-class Auth {
-  constructor({baseUrl, headers}) {
-    this.baseUrl = baseUrl;
-    this.headers = headers;
-  }
+const headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+}
+const baseUrl = 'https://api.mesto-frontend.nomoredomains.xyz';
 
-  signup({ email, password }) {
-    return fetch(`${this.baseUrl}/signup`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: this.headers,
-      body: JSON.stringify({ password, email })
-    })
-      .then((res) => checkResponse(res));
-  }
-
-  signin({ email, password }) {
-    return fetch(`${this.baseUrl}/signin`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: this.headers,
-      body: JSON.stringify({ password, email })
-    })
-    .then((res) => checkResponse(res))
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        return data;
-      }
-    });
-  }
-
-  getContent(token) {
-    return fetch(`${this.baseUrl}/users/me`, {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        ...this.headers,
-        authorization: `Bearer ${token}`,
-      },
-    })
+export const signup = ({ email, password }) => {
+  return fetch(`${baseUrl}/signup`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+    body: JSON.stringify({ password, email })
+  })
     .then((res) => checkResponse(res));
-  }
 };
 
-const auth = new Auth({
-  baseUrl: 'https://api.mesto-frontend.nomoredomains.xyz',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-  }
-})
+export const signin = ({ email, password }) => {
+  return fetch(`${baseUrl}/signin`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+    body: JSON.stringify({ password, email })
+  })
+  .then((res) => checkResponse(res));
+};
 
-export default auth;
+export const getContent = (jwt) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...headers,
+      authorization: `Bearer ${jwt}`,
+    },
+  })
+  .then((res) => checkResponse(res));
+};
